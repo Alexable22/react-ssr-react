@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///D:/Users/Document/code/1204/9/react-ssr-blog/react-ssr-blog/client/src/lib/store.js"],"sourcesContent":["import { configureStore } from '@reduxjs/toolkit';\r\nimport postReducer from './features/posts/postSlice';\r\n\r\n// 创建 makeStore 函数，每次请求都需要新的 store 实例（SSR 的要求）\r\nexport const makeStore = () => {\r\n  return configureStore({\r\n    reducer: {\r\n      posts: postReducer,\r\n    },\r\n  });\r\n};"],"names":[],"mappings":";;;;AAAA;;;;;;;;AAIO,MAAM,YAAY;IACvB,OAAO,IAAA,gNAAc,EAAC;QACpB,SAAS;YACP,OAAO;QACT;IACF;AACF"}},
+    {"offset": {"line": 30, "column": 0}, "map": {"version":3,"sources":["file:///D:/Users/Document/code/1204/9/react-ssr-blog/react-ssr-blog/client/src/app/StoreProvider.js"],"sourcesContent":["'use client' // 必须标记为客户端组件\r\nimport { useRef } from 'react';\r\nimport { Provider } from 'react-redux';\r\nimport { makeStore } from '../lib/store';\r\n\r\nexport default function StoreProvider({ children }) {\r\n  const storeRef = useRef();\r\n  \r\n  if (!storeRef.current) {\r\n    // 确保 store 只被创建一次\r\n    storeRef.current = makeStore();\r\n  }\r\n\r\n  return <Provider store={storeRef.current}>{children}</Provider>;\r\n}"],"names":[],"mappings":";;;;;AACA;AACA;AACA;;;AAHA,cAAa,aAAa;;;;AAKX,SAAS,cAAc,EAAE,QAAQ,EAAE;;IAChD,MAAM,WAAW,IAAA,uKAAM;IAEvB,IAAI,CAAC,SAAS,OAAO,EAAE;QACrB,kBAAkB;QAClB,SAAS,OAAO,GAAG,IAAA,mIAAS;IAC9B;IAEA,qBAAO,6LAAC,wKAAQ;QAAC,OAAO,SAAS,OAAO;kBAAG;;;;;;AAC7C;GATwB;KAAA"}}]
+}

@@ -1,0 +1,15 @@
+[00:00:00.991] Server  LOG      ✓ Ready in 628ms
+[00:00:07.383] Server  LOG      ○ Compiling / ...
+[00:00:12.944] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:21.793] Browser ERROR   Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead.
+[00:09:56.305] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:21:00.706] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:22:05.975] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:43:57.928] Server  LOG      ✓ Compiled in 422ms
+[00:46:07.257] Server  LOG      ✓ Compiled in 55ms
+[00:46:13.761] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:11:52.129] Server  LOG      ✓ Compiled in 125ms
+[01:11:58.170] Browser LOG     跳转路径： /posts/30/edit
+[01:13:06.734] Browser LOG     跳转路径： /posts/30/edit
+[01:14:29.611] Server  LOG      ✓ Compiled in 40ms
+[01:17:19.783] Server  LOG      ✓ Compiled in 101ms
