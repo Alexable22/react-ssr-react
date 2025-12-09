@@ -18,7 +18,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$ant$2d$design$2f$icons$2f$es$2f$icons$2f$RobotOutlined$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__RobotOutlined$3e$__ = __turbopack_context__.i("[project]/node_modules/@ant-design/icons/es/icons/RobotOutlined.js [app-ssr] (ecmascript) <export default as RobotOutlined>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/axios/lib/axios.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-ssr] (ecmascript)"); // Next.js 的路由跳转钩子
-'use client'; // 这是一个客户端交互页面，必须标记 'use client'
+'use client'; // 这是一个客户端交互页面，必须标记 use client
 ;
 ;
 ;
@@ -54,7 +54,7 @@ function CreatePostPage() {
     };
     // 处理 AI 生成请求
     const handleAiGenerate = async ()=>{
-        // 第一步：校验主题非空
+        // 校验主题非空
         if (!aiTopic.trim()) return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$message$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__message$3e$__["message"].warning('请输入主题');
         setAiLoading(true);
         try {
@@ -63,7 +63,7 @@ function CreatePostPage() {
             });
             if (res.data.success) {
                 const { title, summary, content } = res.data.data;
-                // 核心功能：自动填充表单
+                // 可以自动填充表单
                 form.setFieldsValue({
                     title,
                     summary,
@@ -87,7 +87,7 @@ function CreatePostPage() {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$card$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Card$3e$__["Card"], {
                 title: "✍️ 发布新文章",
-                bordered: false,
+                variant: false,
                 // 在卡片右上角增加 AI 按钮
                 extra: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$button$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__$3c$export__default__as__Button$3e$__["Button"], {
                     type: "dashed",

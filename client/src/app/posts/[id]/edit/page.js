@@ -1,6 +1,6 @@
 'use client'; // 必须标记为客户端组件
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, use } from 'react';
 import { Form, Input, Button, message, Card, Spin } from 'antd';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -15,32 +15,32 @@ export default function EditPostPage({ params }) {
   const [form] = Form.useForm();
   const [postId, setPostId] = useState(''); // 存储文章ID
 
+  // Next.js 15+ 中 params 是 Promise，使用 React.use() 解析
+  const { id } = use(params);
 
-  // 修正：正确解析路由参数 + 捕获错误
+  // 正确解析路由参数 + 捕获错误
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // 直接从 params 取 id（Next.js 客户端组件的 params 是普通对象）
-        const currentPostId = params.id;
-        if (!currentPostId) {
+        if (!id) {
           throw new Error('文章ID不存在');
         }
-        setPostId(currentPostId);
-        await fetchPostData(currentPostId); // 调用获取文章数据的函数
+        setPostId(id);
+        await fetchPostData(id); // 调用获取文章数据的函数
       } catch (error) {
         message.error('加载编辑页失败：' + error.message);
-        // 可选：跳回首页（避免停留在错误页面）
-        // router.push('/');
+        // 跳回首页（避免停留在错误页面）
+        router.push('/');
       } finally {
         setFetching(false);
       }
     };
 
     fetchData();
-  }, [params, router]); // 依赖 params（路由参数变化时重新加载）
+  }, [id]); // 依赖 id（路由参数变化时重新加载）
 
 
-  // 1. 获取旧数据并回填表单
+  // 获取旧数据并回填表单
   const fetchPostData = async (id) => {
     try {
       const res = await axios.get(`http://localhost:5000/api/posts/${id}`);
@@ -56,7 +56,7 @@ export default function EditPostPage({ params }) {
   };
 
 
-  // 2. 提交更新
+  // 提交更新
   const onFinish = async (values) => {
     if (!postId) {
       return message.warning('文章ID无效');
@@ -80,7 +80,9 @@ export default function EditPostPage({ params }) {
   if (fetching) {
     return (
       <div style={{ textAlign: 'center', marginTop: 100 }}>
-        <Spin size="large" tip="加载原文中..." />
+        <Spin size="large" tip="加载原文中...">
+          <div style={{ height: 80 }}></div> {/* 占位容器，让 Spin 有内容可包裹 */}
+        </Spin>
       </div>
     );
   }
@@ -88,7 +90,7 @@ export default function EditPostPage({ params }) {
 
   return (
     <div style={{ maxWidth: '800px', margin: '50px auto', padding: '0 20px' }}>
-      <Card title="✏️ 编辑文章" bordered={false} shadow="hover">
+      <Card title="✏️ 编辑文章" variant={false} shadow="hover">
         <Form
           form={form}
           layout="vertical"

@@ -29,31 +29,30 @@ function EditPostPage({ params }) {
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
     const [form] = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$form$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Form$3e$__["Form"].useForm();
     const [postId, setPostId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(''); // 存储文章ID
-    // 修正：正确解析路由参数 + 捕获错误
+    // Next.js 15+ 中 params 是 Promise，使用 React.use() 解析
+    const { id } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["use"])(params);
+    // 正确解析路由参数 + 捕获错误
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const fetchData = async ()=>{
             try {
-                // 直接从 params 取 id（Next.js 客户端组件的 params 是普通对象）
-                const currentPostId = params.id;
-                if (!currentPostId) {
+                if (!id) {
                     throw new Error('文章ID不存在');
                 }
-                setPostId(currentPostId);
-                await fetchPostData(currentPostId); // 调用获取文章数据的函数
+                setPostId(id);
+                await fetchPostData(id); // 调用获取文章数据的函数
             } catch (error) {
                 __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$message$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__message$3e$__["message"].error('加载编辑页失败：' + error.message);
-            // 可选：跳回首页（避免停留在错误页面）
-            // router.push('/');
+                // 跳回首页（避免停留在错误页面）
+                router.push('/');
             } finally{
                 setFetching(false);
             }
         };
         fetchData();
     }, [
-        params,
-        router
-    ]); // 依赖 params（路由参数变化时重新加载）
-    // 1. 获取旧数据并回填表单
+        id
+    ]); // 依赖 id（路由参数变化时重新加载）
+    // 获取旧数据并回填表单
     const fetchPostData = async (id)=>{
         try {
             const res = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get(`http://localhost:5000/api/posts/${id}`);
@@ -71,7 +70,7 @@ function EditPostPage({ params }) {
             __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$message$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__message$3e$__["message"].error('获取文章详情失败：' + error.message);
         }
     };
-    // 2. 提交更新
+    // 提交更新
     const onFinish = async (values)=>{
         if (!postId) {
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$message$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__message$3e$__["message"].warning('文章ID无效');
@@ -98,8 +97,20 @@ function EditPostPage({ params }) {
             },
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$spin$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Spin$3e$__["Spin"], {
                 size: "large",
-                tip: "加载原文中..."
-            }, void 0, false, {
+                tip: "加载原文中...",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        style: {
+                            height: 80
+                        }
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/posts/[id]/edit/page.js",
+                        lineNumber: 84,
+                        columnNumber: 11
+                    }, this),
+                    " "
+                ]
+            }, void 0, true, {
                 fileName: "[project]/src/app/posts/[id]/edit/page.js",
                 lineNumber: 83,
                 columnNumber: 9
@@ -118,7 +129,7 @@ function EditPostPage({ params }) {
         },
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$card$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Card$3e$__["Card"], {
             title: "✏️ 编辑文章",
-            bordered: false,
+            variant: false,
             shadow: "hover",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$form$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Form$3e$__["Form"], {
                 form: form,
@@ -138,12 +149,12 @@ function EditPostPage({ params }) {
                             size: "large"
                         }, void 0, false, {
                             fileName: "[project]/src/app/posts/[id]/edit/page.js",
-                            lineNumber: 98,
+                            lineNumber: 100,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/posts/[id]/edit/page.js",
-                        lineNumber: 97,
+                        lineNumber: 99,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$form$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Form$3e$__["Form"].Item, {
@@ -151,12 +162,12 @@ function EditPostPage({ params }) {
                         name: "summary",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$input$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Input$3e$__["Input"], {}, void 0, false, {
                             fileName: "[project]/src/app/posts/[id]/edit/page.js",
-                            lineNumber: 102,
+                            lineNumber: 104,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/posts/[id]/edit/page.js",
-                        lineNumber: 101,
+                        lineNumber: 103,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$form$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Form$3e$__["Form"].Item, {
@@ -174,12 +185,12 @@ function EditPostPage({ params }) {
                             maxLength: 10000
                         }, void 0, false, {
                             fileName: "[project]/src/app/posts/[id]/edit/page.js",
-                            lineNumber: 106,
+                            lineNumber: 108,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/posts/[id]/edit/page.js",
-                        lineNumber: 105,
+                        lineNumber: 107,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$form$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Form$3e$__["Form"].Item, {
@@ -198,7 +209,7 @@ function EditPostPage({ params }) {
                                     children: "保存修改"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/posts/[id]/edit/page.js",
-                                    lineNumber: 111,
+                                    lineNumber: 113,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$antd$2f$es$2f$button$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__$3c$export__default__as__Button$3e$__["Button"], {
@@ -208,34 +219,34 @@ function EditPostPage({ params }) {
                                     children: "取消"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/posts/[id]/edit/page.js",
-                                    lineNumber: 114,
+                                    lineNumber: 116,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/posts/[id]/edit/page.js",
-                            lineNumber: 110,
+                            lineNumber: 112,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/posts/[id]/edit/page.js",
-                        lineNumber: 109,
+                        lineNumber: 111,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/posts/[id]/edit/page.js",
-                lineNumber: 92,
+                lineNumber: 94,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/app/posts/[id]/edit/page.js",
-            lineNumber: 91,
+            lineNumber: 93,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/posts/[id]/edit/page.js",
-        lineNumber: 90,
+        lineNumber: 92,
         columnNumber: 5
     }, this);
 }

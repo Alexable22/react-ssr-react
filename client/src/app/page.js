@@ -17,13 +17,12 @@ async function getData() {
 
 export default async function Home() {
   // 在服务端等待数据返回
-  //把 data 字段重命名为 posts（假设后端返回格式是 { data: [文章1, 文章2...] }）
+  //把 data 字段重命名为 posts
   const { data: posts } = await getData();
 
   return (
     <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '40px 20px' }}>
       
-      {/* 顶部导航区 */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
         <h1 style={{ fontSize: '2rem', margin: 0 }}>📚 我的 SSR 博客</h1>
         <Link href="/posts/create">

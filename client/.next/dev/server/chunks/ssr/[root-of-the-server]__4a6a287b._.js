@@ -131,8 +131,7 @@ const postSlice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modul
         status: 'idle',
         error: null
     },
-    reducers: {
-    },
+    reducers: {},
     extraReducers: (builder)=>{
         builder.addCase(fetchPosts.pending, (state)=>{
             state.status = 'loading';

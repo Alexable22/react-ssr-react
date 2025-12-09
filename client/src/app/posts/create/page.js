@@ -1,5 +1,5 @@
 //“发布文章”页面
-'use client'; // 这是一个客户端交互页面，必须标记 'use client'
+'use client'; // 这是一个客户端交互页面，必须标记 use client
 
 import React, { useState } from 'react';
 import { Form, Input, Button, message, Card, Modal } from 'antd';
@@ -43,7 +43,7 @@ export default function CreatePostPage() {
 
   // 处理 AI 生成请求
   const handleAiGenerate = async () => {
-      // 第一步：校验主题非空
+      // 校验主题非空
       if (!aiTopic.trim()) return message.warning('请输入主题');
 
       setAiLoading(true);
@@ -55,7 +55,7 @@ export default function CreatePostPage() {
           if (res.data.success) {
               const { title, summary, content } = res.data.data;
               
-              // 核心功能：自动填充表单
+              // 可以自动填充表单
               form.setFieldsValue({
                   title,
                   summary,
@@ -76,7 +76,7 @@ export default function CreatePostPage() {
     <div style={{ maxWidth: '800px', margin: '50px auto', padding: '0 20px' }}>
       <Card 
         title="✍️ 发布新文章" 
-        bordered={false} 
+        variant={false} 
         // 在卡片右上角增加 AI 按钮
         extra={
             <Button 
