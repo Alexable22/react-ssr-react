@@ -86,7 +86,7 @@ export const getPostById = async (req, res) => {
     }
 };
 
-// 1修改文章
+// 修改文章
 export const updatePost = async (req, res) => {
     const { id } = req.params;
     const { title, summary, content, status } = req.body;
